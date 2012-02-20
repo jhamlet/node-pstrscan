@@ -1,0 +1,37 @@
+{   
+    "name": "pstrscan",
+    "description": "A simple, fast string tokenizer for lexical scanning operations.",
+    "version": "0.0.1",
+    "keywords": [
+        "regular",
+        "expression",
+        "tokenizer",
+        "text",
+        "string",
+        "scanner"
+    ],
+    "main": "./lib/pstrscan.js",
+    "directories": {
+        "lib": "lib"
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+        "mocha": "0.3.x",
+        "should": "0.5.x"
+    },
+    "scripts": {
+        "test": "mocha"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://github.com/jhamlet/node-pstrscan/raw/master/LICENSE"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/jhamlet/node-pstrscan.git"
+    },
+    "preferGlobal": true
+}
