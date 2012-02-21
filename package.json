@@ -15,6 +15,7 @@
         "lib": "lib"
     },
     "dependencies": {
+        "proteus": "0.0.x"
     },
     "devDependencies": {
         "mocha": "0.3.x",
