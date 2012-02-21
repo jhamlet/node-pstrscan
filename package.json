@@ -23,7 +23,7 @@
         "should": "0.5.x"
     },
     "scripts": {
-        "test": "mocha"
+        "test": "mocha test/test-pstrscan.js test/test-pstrscan-perf.js"
     },
     "licenses": [
         {
