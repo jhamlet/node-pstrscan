@@ -11,6 +11,7 @@
         "scanner"
     ],
     "main": "./lib/pstrscan.js",
+    "homepage": "http://github.com/jhamlet/node-pstrscan",
     "directories": {
         "lib": "lib"
     },
