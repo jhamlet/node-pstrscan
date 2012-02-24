@@ -1,7 +1,7 @@
 {   
     "name": "pstrscan",
     "description": "A simple, fast string tokenizer for lexical scanning operations.",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "keywords": [
         "regular",
         "expression",
@@ -23,7 +23,7 @@
         "should": "0.5.x"
     },
     "scripts": {
-        "test": "mocha test/test-pstrscan.js test/test-pstrscan-perf.js"
+        "test": "mocha test/test-pstrscan.js"
     },
     "licenses": [
         {
