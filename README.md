@@ -21,18 +21,18 @@ Scanning a string means keeping track of and advancing a position (a zero-based 
 ~~~js
 var PStrScan = require("pstrscan");
 var s = new PStrScan("This is a test");
-s.scan(/\w+/);             # => "This"
-s.scan(/\w+/);             # => null
-s.scan(/\s+/);             # => " "
-s.scan(/\s+/);             # => null
-s.scan(/\w+/);             # => "is"
-s.hasTerminated();         # => false
-s.scan(/\s+/);             # => " "
-s.scan(/(\w+)\s+(\w+)/);   # => "a test"
-s.getMatch();              # => "a test"
-s.getCapture(1);           # => "a"
-s.getCapture(2);           # => "test"
-s.hasTerminated();         # => true
+s.scan(/\w+/);             // = "This"
+s.scan(/\w+/);             // = null
+s.scan(/\s+/);             // = " "
+s.scan(/\s+/);             // = null
+s.scan(/\w+/);             // = "is"
+s.hasTerminated();         // = false
+s.scan(/\s+/);             // = " "
+s.scan(/(\w+)\s+(\w+)/);   // = "a test"
+s.getMatch();              // = "a test"
+s.getCapture(1);           // = "a"
+s.getCapture(2);           // = "test"
+s.hasTerminated();         // = true
 ~~~
 
 ### Documentation
