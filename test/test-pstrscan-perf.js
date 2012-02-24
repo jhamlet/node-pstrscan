@@ -38,7 +38,6 @@
         var txt = FS.readFileSync(__dirname + "/sample.txt");
         mult = mult || 1;
         txt = Array(mult+1).join(txt);
-        sourceText.kb = Math.floor(txt.length / 1024);
         return txt;
     }
 
@@ -53,56 +52,60 @@
         return;
     }
     
-    txt = sourceText(files);
-    txtSize = sourceText.kb;
-    
-    suite(
-        "#scanUntil for every word sequence in a " + txtSize + " kb file",
-        function () {
-            test("strscan", benchmark(function () {
-                var s = new StrScanner(txt),
-                    match
-                ;
-            
-                while (!s.hasTerminated()) {
-                    match = s.scanUntil(WORD_REGEX) || s.terminate();
-                }
-            }));
-            
-            test("pstrscan", benchmark(function () {
-                var s = new PStrScanner(txt),
-                    match
-                ;
-            
-                while (!s.hasTerminated()) {
-                    match = s.scanUntil(WORD_REGEX) || s.terminate();
-                }
-            }));
-        }
-    );
-    
-    suite(
-        "#scan alternate word or space sequence in a " + txtSize + " kb file",
-        function () {
-            test("strscan", benchmark(function () {
-                var s = new StrScanner(txt),
-                    match
-                ;
+    [32, 1024].forEach(function (amt) {
+        var txt = sourceText(amt),
+            txtSize = txt.length
+        ;
+        
+        suite(
+            "#scanUntil for every word sequence within a string of " + txtSize + " characters",
+            function () {
+                test("strscan", benchmark(function () {
+                    var s = new StrScanner(txt),
+                        match
+                    ;
 
-                while (!s.hasTerminated()) {
-                    match = s.scan(WORD_REGEX) || s.scan(SPACE_REGEX);
-                }
-            }));
-            
-            test("pstrscan", benchmark(function () {
-                var s = new PStrScanner(txt),
-                    match
-                ;
-            
-                while (!s.eos) {
-                    match = s.scan(WORD_REGEX) || s.scan(SPACE_REGEX);
-                }
-            }));
-        }
-    );
+                    while (!s.hasTerminated()) {
+                        match = s.scanUntil(WORD_REGEX) || s.terminate();
+                    }
+                }));
+
+                test("pstrscan", benchmark(function () {
+                    var s = new PStrScanner(txt),
+                        match
+                    ;
+
+                    while (!s.hasTerminated()) {
+                        match = s.scanUntil(WORD_REGEX) || s.terminate();
+                    }
+                }));
+            }
+        );
+
+        suite(
+            "#scan alternate word or space sequence within a string of " + txtSize + " characters",
+            function () {
+                test("strscan", benchmark(function () {
+                    var s = new StrScanner(txt),
+                        match
+                    ;
+
+                    while (!s.hasTerminated()) {
+                        match = s.scan(WORD_REGEX) || s.scan(SPACE_REGEX);
+                    }
+                }));
+
+                test("pstrscan", benchmark(function () {
+                    var s = new PStrScanner(txt),
+                        match
+                    ;
+
+                    while (!s.eos) {
+                        match = s.scan(WORD_REGEX) || s.scan(SPACE_REGEX);
+                    }
+                }));
+            }
+        );
+    });
+
 }());
