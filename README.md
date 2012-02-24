@@ -4,7 +4,7 @@
 
 **PStringScanner** is a simple string tokenizer that provides for lexical scanning operations on a string.
 
-It's the _third_ port of the [Ruby  library](http://ruby-doc.org/core/classes/StringScanner.html) into JavaScript. However, where the other ports concentrated on the interface, this one concentrates on **speed**.
+It's the _third_ port of the [Ruby  library](http://corelib.rubyonrails.org/classes/StringScanner.html) into JavaScript. However, where the other ports concentrated on the interface, this one concentrates on **speed**.
 
 The original Ruby version was written in C, and is very fast. This version, while not in C, is *4-10x* faster on short strings (under 32 Kb of characters), and **an order of magnitude (100+x)** faster on large strings (million+ characters) than the other two ports of the same library. All of that accomplished by taking advantage of the traits in JavaScript's Regular Expressions, and not blindly porting from Ruby.
 
@@ -37,7 +37,7 @@ s.hasTerminated();         // = true
 
 ### Documentation
 
-The [interface should be familiar](http://sstephenson.github.com/strscan-js/) to those familiar with the [original library](http://ruby-doc.org/core/classes/StringScanner.html), and the one originally ported to [JavaScript/Node](http://sstephenson.github.com/strscan-js/). There are some slight differences, but you should be able to gleam those from the [source file](https://github.com/jhamlet/node-pstrscan/blob/master/lib/pstrscan.js).
+The [interface should be familiar](http://sstephenson.github.com/strscan-js/) to those familiar with the [original library](http://corelib.rubyonrails.org/classes/StringScanner.html), and the one originally ported to [JavaScript/Node](http://sstephenson.github.com/strscan-js/). There are some slight differences, but you should be able to gleam those from the [source file](https://github.com/jhamlet/node-pstrscan/blob/master/lib/pstrscan.js).
 
 ### To Do
 
