@@ -7,7 +7,7 @@ function makeScanner (src) {
     return new Scanner(src);
 }
 
-suite("PStringScanner", function () {
+suite("pstrscan", function () {
     
     test("#scan", function () {
         var s = makeScanner("Fri Dec 12 1975 14:39");

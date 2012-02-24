@@ -4,22 +4,44 @@
     var FS = require("fs"),
         should = require("should"),
         PStrScanner = require("../"),
-        StrScanner
+        /**
+         * Change the following value to increase the scanned text size.
+         * Each increment adds 1024 characters.
+         */
+        files = 512,
+        WORD_REGEX = /\w+/,
+        SPACE_REGEX = /[\s,.]+/,
+        StrScanner,
+        txt,
+        txtSize
     ;
     
     function benchmark (fn) {
+        var bFn = function () {
+                bFn.start = Date.now();
+                fn();
+                bFn.finish = Date.now();
+                console.log(bFn.delta + " ms");
+            }
+        ;
         
-        return function () {
-            var start = Date.now(),
-                finish;
-            
-            fn();
-            
-            finish = Date.now();
-            console.log((finish - start) + " ms");
-        };
+        Object.defineProperty(bFn, "delta", {
+            get: function () {
+                return this.finish - this.start;
+            }
+        });
+        
+        return bFn;
     }
     
+    function sourceText (mult) {
+        var txt = FS.readFileSync(__dirname + "/sample.txt");
+        mult = mult || 1;
+        txt = Array(mult+1).join(txt);
+        sourceText.kb = Math.floor(txt.length / 1024);
+        return txt;
+    }
+
     /**
      * Can't run the performance comparison if the contender is not available
      */
@@ -27,32 +49,60 @@
         StrScanner = require("strscan").StringScanner;
     }
     catch (e) {
-        console.log("StringScanner not installed. Aborting performance test.");
+        console.log("strscan not installed. Aborting performance test.");
         return;
     }
     
-    suite("PStringScanner vs. StringScanner Performance", function () {
-        var txt = FS.readFileSync(__dirname + "/sample.txt");
-        
-        test("PStringScanner 83 kb file", benchmark(function () {
-            var s = new PStrScanner(txt),
-                match
-            ;
-            
-            while (!s.eos) {
-                match = s.scan(/[\w,.]+/) || s.scan(/\s+/);
-            }
-        }));
-        
-        test("StringScanner 83 kb file", benchmark(function () {
-            var s = new StrScanner(txt),
-                match
-            ;
-            
-            while (!s.hasTerminated()) {
-                match = s.scan(/[\w,.]+/) || s.scan(/\s+/);
-            }
-        }));
-    });
+    txt = sourceText(files);
+    txtSize = sourceText.kb;
     
+    suite(
+        "#scanUntil for every word sequence in a " + txtSize + " kb file",
+        function () {
+            test("strscan", benchmark(function () {
+                var s = new StrScanner(txt),
+                    match
+                ;
+            
+                while (!s.hasTerminated()) {
+                    match = s.scanUntil(WORD_REGEX) || s.terminate();
+                }
+            }));
+            
+            test("pstrscan", benchmark(function () {
+                var s = new PStrScanner(txt),
+                    match
+                ;
+            
+                while (!s.hasTerminated()) {
+                    match = s.scanUntil(WORD_REGEX) || s.terminate();
+                }
+            }));
+        }
+    );
+    
+    suite(
+        "#scan alternate word or space sequence in a " + txtSize + " kb file",
+        function () {
+            test("strscan", benchmark(function () {
+                var s = new StrScanner(txt),
+                    match
+                ;
+
+                while (!s.hasTerminated()) {
+                    match = s.scan(WORD_REGEX) || s.scan(SPACE_REGEX);
+                }
+            }));
+            
+            test("pstrscan", benchmark(function () {
+                var s = new PStrScanner(txt),
+                    match
+                ;
+            
+                while (!s.eos) {
+                    match = s.scan(WORD_REGEX) || s.scan(SPACE_REGEX);
+                }
+            }));
+        }
+    );
 }());
