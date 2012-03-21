@@ -8,7 +8,7 @@
          * Change the following value to increase the scanned text size.
          * Each increment adds 1024 characters.
          */
-        files = 512,
+        files = parseInt(process.env["TEXT_MULTIPLE"], 10) || 1024,
         WORD_REGEX = /\w+/,
         SPACE_REGEX = /[\s,.]+/,
         StrScanner,
@@ -41,9 +41,7 @@
         return txt;
     }
 
-    /**
-     * Can't run the performance comparison if the contender is not available
-     */
+    // Can't run the performance comparison if the contender is not available
     try {
         StrScanner = require("strscan").StringScanner;
     }
@@ -52,7 +50,7 @@
         return;
     }
     
-    [32, 1024].forEach(function (amt) {
+    [32, files].forEach(function (amt) {
         var txt = sourceText(amt),
             txtSize = txt.length
         ;
