@@ -6,7 +6,7 @@
 
 It's the _third_ port of the [Ruby  library](http://corelib.rubyonrails.org/classes/StringScanner.html) into JavaScript. However, where the other ports concentrated on the interface, this one concentrates on **speed**.
 
-The original Ruby version was written in C, and is very fast. This version, while not in C, is *4-10x* faster on short strings (under 32 Kb of characters), and **an order of magnitude (100-1000x)** faster on large strings (million+ characters) than the other two ports of the same library. All of that accomplished by taking advantage of the traits in JavaScript's Regular Expressions, and not blindly porting from Ruby.
+The original Ruby version was written in C, and is very fast. This version, while not in C, is as fast on short strings (under 32 Kb of characters), and almost **twice as fast** on large strings (million+ characters) than the other ports.
 
 ### Installation
 
