@@ -59,6 +59,31 @@ suite("pstrscan", function () {
         
     });
     
+    test('#scan with correct capture.index', function () {
+        var s = makeScanner("test string abc def");
+        
+        s.scan(/\w+/).should.equal("test");
+        s.captures.index.should.equal(0);
+        
+        s.scan(/\s+/).should.equal(" ");
+        s.captures.index.should.equal(4);
+
+        s.scan(/\w+/).should.equal("string");
+        s.captures.index.should.equal(5);
+
+        s.scan(/\s+/).should.equal(" ");
+        s.captures.index.should.equal(11);
+
+        s.scan(/\w+/).should.equal("abc");
+        s.captures.index.should.equal(12);
+
+        s.scan(/\s+/).should.equal(" ");
+        s.captures.index.should.equal(15);
+
+        s.scan(/\w+/).should.equal("def");
+        s.captures.index.should.equal(16);
+    });
+    
     test("#scanUntil", function () {
         var s = makeScanner("Fri Dec 12 1975 14:39");
         
